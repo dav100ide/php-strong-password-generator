@@ -1,50 +1,32 @@
 <?php
-$password_len = intval($_GET['password_len']);
+// Define a function to generate a password
+function generatePassword($length)
+{
+   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$%&*@/!?=#';
 
-$chars = [
+   $password = '';
 
-   'letters' => [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-   ],
-
-   'nums' => [1, 2, 3, 4, 5, 6, 7, 8, 9],
-
-   'symbols' => ['$', '/', ')', '(', '£', '#', '+', '@', '*', '?', '!'],
-];
-
-
-if (!empty($password_len)) {
-   for ($i = 0; $i < $password_len; $i++) {
-      $password = '';
+   // Generate a random string of characters of the specified length
+   for ($i = 0; $i < $length; $i++) {
+      // Pick a random character from the string of possible characters
+      $password .= $characters[rand(0, strlen($characters) - 1)];
    }
-}
-?>
 
+   return $password;
+}
+
+// Check if the "length" parameter is set in the URL
+if (isset($_GET['length'])) {
+   $password_length = (int)$_GET['length'];
+} else {
+   $password_length = 8;
+}
+
+// Generate a password with the specified length
+$password = generatePassword($password_length);
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,10 +41,14 @@ if (!empty($password_len)) {
 <body>
    <form method="GET">
       <label for="password-len">digita la lunghezza desiderata</label>
-      <input type="text" name="password_len" id="password-len">
+      <input type="text" name="length" id="password-len">
       <button type="submit">genera</button>
    </form>
-   <h3>ecco la tua password: </h3>
+   <h3>ecco la tua password:
+      <?php
+      echo $password
+      ?>
+   </h3>
 </body>
 
 </html>
