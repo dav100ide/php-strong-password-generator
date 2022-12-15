@@ -1,19 +1,5 @@
 <?php
-// Define a function to generate a password
-function generatePassword($length)
-{
-   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$%&*@/!?=#';
-
-   $password = '';
-
-   // Generate a random string of characters of the specified length
-   for ($i = 0; $i < $length; $i++) {
-      // Pick a random character from the string of possible characters
-      $password .= $characters[rand(0, strlen($characters) - 1)];
-   }
-
-   return $password;
-}
+include_once __DIR__ . '/functions.php';
 
 // Check if the "length" parameter is set in the URL
 if (isset($_GET['length'])) {
@@ -23,7 +9,7 @@ if (isset($_GET['length'])) {
 }
 
 // Generate a password with the specified length
-$password = generatePassword($password_length);
+$password = generate_password($password_length);
 
 
 ?>
